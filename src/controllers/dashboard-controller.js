@@ -7,7 +7,7 @@ export const dashboardController = {
       const viewData = {
         title: "Playtime Dashboard",
         playlists: playlists,
-      };
+      };     
       return h.view("dashboard-view", viewData);
     },
   },
@@ -21,4 +21,5 @@ export const dashboardController = {
       return h.redirect("/dashboard");
     },
   },
+
 };
