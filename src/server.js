@@ -6,6 +6,7 @@ import Handlebars from "handlebars";
 import path from "path";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
+import Joi from "joi";
 import { webRoutes } from "./web-routes.js";
 import { db } from "./models/db.js";
 import { accountsController } from "./controllers/accounts-controller.js";
@@ -15,7 +16,6 @@ if (result.error) {
   console.log(result.error.message);
   process.exit(1);
 }
-
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -48,6 +48,7 @@ async function init() {
     redirectTo: "/",
     validate: accountsController.validate,
   });
+  server.validator(Joi);
   server.auth.default("session");
   db.init();
   server.route(webRoutes);
