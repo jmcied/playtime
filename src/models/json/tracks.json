@@ -1,0 +1,11 @@
+{
+  "tracks": [
+    {
+      "title": "track1",
+      "artist": "art1",
+      "duration": 7,
+      "_id": "82e666e9-741a-46aa-91e1-566d63ed9b2a",
+      "playlistid": "a1584fa6-64f2-44c8-aba7-dc9d1550b347"
+    }
+  ]
+}
