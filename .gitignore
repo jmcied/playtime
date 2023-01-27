@@ -123,3 +123,6 @@ dist
 
 #dotenv cookie login details
 .env
+
+#test
+test
