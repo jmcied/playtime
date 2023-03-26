@@ -4,16 +4,16 @@ import Mongoose from "mongoose";
 import * as mongooseSeeder from "mais-mongoose-seeder";
 import { seedData } from "./seed-data.js";
 
-export function connectMongo() {
-  dotenv.config();
-
-  const seedLib = mongooseSeeder.default;
+const seedLib = mongooseSeeder.default;
 
 async function seed() {
   const seeder = seedLib(Mongoose);
   const dbData = await seeder.seed(seedData, { dropDatabase: false, dropCollections: true });
   console.log(dbData);
-  }
+}
+
+export function connectMongo() {
+  dotenv.config();
 
   Mongoose.set("strictQuery", true);
   Mongoose.connect(process.env.db);
@@ -31,6 +31,4 @@ async function seed() {
     console.log(`database connected to ${this.name} on ${this.host}`);
     seed();
   });
-
-
 }
