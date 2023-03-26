@@ -1,6 +1,6 @@
 {
   "name": "playtime",
-  "version": "0.1.0",
+  "version": "0.10.0",
   "description": "Playtime: a Hapi/node application for managing Playlists",
   "main": "src/server.js",
   "type": "module",
@@ -39,5 +39,9 @@
     "lowdb": "^5.0.5",
     "mais-mongoose-seeder": "^1.0.7",
     "uuid": "^9.0.0"
+  },
+  
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
