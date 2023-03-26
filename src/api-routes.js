@@ -1,5 +1,6 @@
 import { userApi } from "./api/user-api.js";
 import { playlistApi } from "./api/playlist-api.js";
+import { trackApi } from "./api/track-api.js";
 
 export const apiRoutes = [
   { method: "GET", path: "/api/users", config: userApi.find },
