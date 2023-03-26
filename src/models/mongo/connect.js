@@ -1,9 +1,19 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import * as dotenv from "dotenv";
-// eslint-disable-next-line import/no-extraneous-dependencies
 import Mongoose from "mongoose";
+import * as mongooseSeeder from "mais-mongoose-seeder";
+import { seedData } from "./seed-data.js";
 
 export function connectMongo() {
   dotenv.config();
+
+  const seedLib = mongooseSeeder.default;
+
+async function seed() {
+  const seeder = seedLib(Mongoose);
+  const dbData = await seeder.seed(seedData, { dropDatabase: false, dropCollections: true });
+  console.log(dbData);
+  }
 
   Mongoose.set("strictQuery", true);
   Mongoose.connect(process.env.db);
@@ -19,5 +29,8 @@ export function connectMongo() {
 
   db.once("open", function () {
     console.log(`database connected to ${this.name} on ${this.host}`);
+    seed();
   });
+
+
 }

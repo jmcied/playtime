@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import Mongoose from "mongoose";
+import Boom from "@hapi/boom";
 
 const { Schema } = Mongoose;
 
