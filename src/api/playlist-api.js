@@ -1,10 +1,15 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import Boom from "@hapi/boom";
+import { IdSpec, PlaylistArraySpec, PlaylistSpec, PlaylistSpecPlus } from "../models/joi-schemas.js";
 import { db } from "../models/db.js";
+import { validationError } from "./logger.js";
 
 export const playlistApi = {
   find: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
+
     handler: async function (request, h) {
       try {
         const playlists = await db.playlistStore.getAllPlaylists();
@@ -13,10 +18,17 @@ export const playlistApi = {
         return Boom.serverUnavailable("Database Error");
       }
   },
+  tags: ["api"],
+  response: { schema: PlaylistArraySpec, failAction: validationError },
+  description: "Get all playlists",
+  notes: "Returns all playlists",
 },
 
   findOne: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
+
     async handler(request) {
       try {
         const playlist = await db.playlistStore.getPlaylistById(request.params.id);
@@ -28,11 +40,19 @@ export const playlistApi = {
         return Boom.serverUnavailable("No Playlist with this id");
       }
     },
+    tags: ["api"],
+    description: "Find a Playlist",
+    notes: "Returns a playlist",
+    validate: { params: { id: IdSpec }, failAction: validationError },
+    response: { schema: PlaylistSpecPlus, failAction: validationError },
   },
 
 
     create: {
-    auth: false,
+      auth: {
+        strategy: "jwt",
+      },
+  
     handler: async function (request, h) {
       try {
         const playlist = request.payload;
@@ -45,10 +65,18 @@ export const playlistApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    description: "Create a Playlist",
+    notes: "Returns the newly created playlist",
+    validate: { payload: PlaylistSpec, failAction: validationError },
+    response: { schema: PlaylistSpecPlus, failAction: validationError },
   },
 
   deleteOne: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
+
     handler: async function (request, h) {
       try {
         const playlist = await db.playlistStore.getPlaylistById(request.params.id);
@@ -61,11 +89,17 @@ export const playlistApi = {
         return Boom.serverUnavailable("No Playlist with this id");
       }
     },
+    tags: ["api"],
+    description: "Delete a playlist",
+    validate: { params: { id: IdSpec }, failAction: validationError },
   },
 
 
   deleteAll: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
+
     handler: async function (request, h) {
       try {
         await db.playlistStore.deleteAllPlaylists();
@@ -74,5 +108,7 @@ export const playlistApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    description: "Delete all PlaylistApi",
   },
 };
